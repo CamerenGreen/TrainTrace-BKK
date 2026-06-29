@@ -1,0 +1,6 @@
+{
+  "name": "real-time-train-route-optimizer",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
