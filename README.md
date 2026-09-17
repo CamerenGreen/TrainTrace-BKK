@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite (normally http://127.0.0.1:5173).
+Open the local URL printed by Vite.
 
 ```sh
 npm test
