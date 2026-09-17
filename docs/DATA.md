@@ -31,9 +31,8 @@ All fare functions are **simplified planning heuristics**. The source review doe
 - Blue: stop bands within the current published ฿17–44 range. No extra ticket for a platform change at Tha Phra.
 - Purple: modeled ฿14 plus ฿2 per stop, capped at ฿42. Card-dependent daily caps and Blue/Purple entry rebates are not applied.
 - Pink/Yellow: modeled ฿15 plus ฿3 per stop, capped at ฿45. Branch segments remain in the same Pink ticket group; actual branch distance charges differ from the stop heuristic.
-- Walking-only interchanges cost ฿0. Cross-system rail journeys sum ticket groups. No discount eligibility is inferred.
+- Walking-only interchanges are free, obviously. Cross-system rail journeys sum ticket groups. No discount eligibility is inferred.
 
-For production fare accuracy, obtain licensed/current operator station-pair matrices and replace the estimator with those tables, with effective dates and ticket categories.
 
 ## Time estimates
 
@@ -41,4 +40,4 @@ Assume 2.5 minutes per rail edge (4 minutes PK10–MT01), 3–7 minutes for walk
 
 ## Future live integration
 
-There is no live status, arrival, position, disruption or timetable feed in this version. A future integration needs an authorized operator/provider source and a server-side adapter (credentials must never be bundled into Vite client code). Freshness timestamps, stale-data fallbacks and explicit disruption-aware graph rules should be added with that feed. Until then, keep “Estimate mode” visible.
+There is no live status, arrival, position, disruption or timetable feed in this version. A future integration needs an authorized operator/provider source and a server-side adapter (credentials must never be bundled into Vite client code). Freshness timestamps, stale-data fallbacks and explicit disruption-aware graph rules should be added with that feed.
