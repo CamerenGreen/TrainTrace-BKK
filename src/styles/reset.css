@@ -1,0 +1,10 @@
+/* Minimal browser normalization for the custom planner styles. */
+*, ::before, ::after { box-sizing: border-box; border: 0 solid; }
+html { line-height: 1.5; -webkit-text-size-adjust: 100%; tab-size: 4; }
+body, h1, h2, h3, h4, p, ol, ul { margin: 0; padding: 0; }
+h1, h2, h3, h4 { font-size: inherit; font-weight: inherit; }
+button, input { font: inherit; color: inherit; letter-spacing: inherit; background: transparent; border-radius: 0; padding: 0; }
+button { text-transform: none; }
+svg { display: block; vertical-align: middle; }
+summary { display: list-item; }
+[hidden]:not([hidden="until-found"]) { display: none !important; }
