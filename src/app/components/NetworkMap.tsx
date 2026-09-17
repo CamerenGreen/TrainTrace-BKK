@@ -85,10 +85,9 @@ export function NetworkMap({
     <section className="map-card" aria-label="Interactive Bangkok rail map">
       <div className="map-heading">
         <div>
-          <span className="eyebrow">EXPLORE THE NETWORK</span>
-          <h2>One city. Every connection.</h2>
+          <h2>Rail map</h2>
         </div>
-        <span className="schematic-tag">Schematic map</span>
+        <span className="schematic-tag">Not to scale</span>
       </div>
       <div className="map-filters" aria-label="Highlight a line">
         <button
@@ -186,7 +185,7 @@ export function NetworkMap({
             fontSize="19"
             transform="rotate(25 520 1240)"
           >
-            CHAO PHRAYA RIVER · schematic
+            CHAO PHRAYA RIVER
           </text>
           <text x="135" y="95" className="district-label">
             NONTHABURI
@@ -321,8 +320,8 @@ export function NetworkMap({
         </svg>
         <div className="map-instruction">
           <span className="instruction-dot" />
-          Select a station to start exploring
-          <span> · Drag to pan · Zoom for all names</span>
+          Select a station
+          <span> · Drag to move · Zoom for names</span>
         </div>
         <div className="map-controls">
           <button
@@ -394,10 +393,9 @@ export function NetworkMap({
       <footer className="map-footer">
         <span>
           <i className="interchange-icon" />
-          Interchange / walk
+          Change lines
         </span>
-        <span>7 lines · {STATIONS.length} station platforms</span>
-        <span>BTS + MRT network</span>
+        <span>7 lines</span>
       </footer>
     </section>
   );

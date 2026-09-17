@@ -3,16 +3,14 @@ import {
   ArrowDownUp,
   ArrowRight,
   ArrowUpRight,
-  Check,
   Clock3,
   Info,
-  MapPin,
   Route,
   TrainFront,
   Wallet,
   X,
 } from "lucide-react";
-import { getStation, LINES, STATIONS } from "../../data/stations";
+import { getStation, LINES } from "../../data/stations";
 import {
   bangkokTime,
   findBestRoutes,
@@ -33,10 +31,8 @@ function Journey({ plan, now }: { plan: RoutePlan; now: Date }) {
   return (
     <div className="journey">
       <div className="journey-heading">
-        <h3>Your journey</h3>
-        <span>
-          <Check size={12} /> Estimated route
-        </span>
+        <h3>Route</h3>
+
       </div>
       <div className="journey-metrics" role="status" aria-live="polite">
         <div>
@@ -86,15 +82,7 @@ function Journey({ plan, now }: { plan: RoutePlan; now: Date }) {
                 {s.sameLine
                   ? `Change trains at ${s.from.name}`
                   : `Walk ${s.minutes} min · ${s.from.name}${s.from.name !== s.to.name ? ` → ${s.to.name}` : ""}`}
-                <small>
-                  {s.sameLine
-                    ? "Stay in the paid area; change platforms."
-                    : s.from.line.startsWith("bts-") &&
-                        s.to.line.startsWith("bts-") &&
-                        s.from.code === "CEN"
-                      ? "Stay in the BTS paid area."
-                      : "Follow interchange signs; allow time between platforms."}
-                </small>
+
               </div>
             </div>
           ) : (
@@ -153,8 +141,7 @@ function Journey({ plan, now }: { plan: RoutePlan; now: Date }) {
           <p>Walking connection · no rail fare</p>
         )}
         <small>
-          Adult single-trip planning estimates. Distance bands, ticket type and
-          discounts can change the actual price.
+          Adult fare estimates. Discounts are not included.
         </small>
       </details>
     </div>
@@ -236,18 +223,11 @@ export function RouteOptimizer() {
       <main>
         <section className="intro">
           <div>
-            <div className="eyebrow">YOUR CITY, A LITTLE CLOSER</div>
-            <h1>
-              Bangkok, connected<span>.</span>
-            </h1>
-            <p>
-              Find your way across the city. More exploring, less figuring it
-              out.
-            </p>
+            <h1>Bangkok BTS &amp; MRT Route Planner</h1>
           </div>
           <div className="estimate-badge">
             <span />
-            Estimate mode<small>No live train feed connected</small>
+            Estimates only
           </div>
         </section>
         <div className="workspace">
@@ -257,8 +237,7 @@ export function RouteOptimizer() {
                 <Route size={20} />
               </span>
               <div>
-                <h2>Where are you heading?</h2>
-                <p>Let’s find your next connection.</p>
+                <h2>Plan a trip</h2>
               </div>
             </div>
             <form
@@ -298,11 +277,11 @@ export function RouteOptimizer() {
               />
               {from && from === to && (
                 <p className="field-error" role="status">
-                  You’re already there. Choose a different destination.
+                  Choose a different destination.
                 </p>
               )}
               <label className="preference-label">
-                Make the most of your journey
+                Sort routes by
               </label>
               <div className="preferences" aria-label="Route preference">
                 {preferences.map((p) => (
@@ -321,7 +300,7 @@ export function RouteOptimizer() {
                 ))}
               </div>
               <button className="search-button" disabled={!valid} type="submit">
-                Find my route
+                Find route
                 <ArrowRight size={18} />
               </button>
               <div className="departure-note">
@@ -367,19 +346,7 @@ export function RouteOptimizer() {
               </>
             ) : (
               <div className="empty-journey">
-                <div className="empty-route-art">
-                  <span>A</span>
-                  <i />
-                  <TrainFront size={25} />
-                  <i />
-                  <span>B</span>
-                </div>
-                <h3>A better way from A to B.</h3>
-                <p>
-                  Search {STATIONS.length} station platforms, or choose a stop
-                  on the map to begin.
-                </p>
-                <span className="eyebrow">TRY A JOURNEY</span>
+                <span className="eyebrow">Example routes</span>
                 <button
                   onClick={() =>
                     example("bts-sukhumvit:CEN", "bts-sukhumvit:E4")
@@ -418,7 +385,7 @@ export function RouteOptimizer() {
               <p>
                 Fares and travel times are estimates.
                 <button onClick={() => dialog.current?.showModal()}>
-                  How we calculate your trip
+                  About estimates
                 </button>
               </p>
             </div>
@@ -437,39 +404,14 @@ export function RouteOptimizer() {
                 setPlanned(true);
               }}
             />
-            <div className="below-map">
-              <div>
-                <span className="small-icon">
-                  <TrainFront size={19} />
-                </span>
-                <p>
-                  <b>The whole BTS + MRT network</b>
-                  <span>Seven lines, including the Pink Line branch.</span>
-                </p>
-              </div>
-              <div>
-                <span className="small-icon">
-                  <Wallet size={19} />
-                </span>
-                <p>
-                  <b>A little planning goes a long way</b>
-                  <span>Compare time, estimated fares and changes.</span>
-                </p>
-              </div>
-            </div>
-            <div className="coverage-note">
-              <MapPin size={14} />
-              BTS Sukhumvit, Silom & Gold · MRT Blue, Purple, Yellow & Pink.
-              Airport Rail Link and SRT are outside this planner.
-            </div>
           </div>
         </div>
         <footer className="page-footer">
           <span>
-            TrainTrace BKK<span>Made for the journey.</span>
+            TrainTrace BKK
           </span>
           <button onClick={() => dialog.current?.showModal()}>
-            Network & fare sources
+            Sources
             <ArrowUpRight size={13} />
           </button>
         </footer>
@@ -482,36 +424,15 @@ export function RouteOptimizer() {
         >
           <X size={20} />
         </button>
-        <span className="eyebrow">A NOTE ON YOUR JOURNEY</span>
-        <h2>Useful estimates. Clear expectations.</h2>
-        <p>
-          This app calculates routes instantly on the operating BTS/MRT network.
-          It does not receive live arrivals, train positions or disruption
-          reports.
-        </p>
-        <h3>Travel times</h3>
-        <p>
-          We allow about 2½ minutes per station, walking time at interchanges,
-          and half an assumed 6–10 minute headway each time you board. Arrival
-          estimates refresh every 30 seconds. Check station signs for the next
-          and last trains.
-        </p>
-        <h3>Fare estimates</h3>
-        <p>
-          Adult single-trip estimates use simplified distance bands. BTS changes
-          at Siam share one ticket estimate; other systems are added separately.
-          Blue Line estimates use the July 2026 ฿17–44 range. Card discounts,
-          daily caps, concessions and cross-system rebates are not included. The
-          lowest-fare option is based on this estimate model.
-        </p>
-        <h3>Network coverage</h3>
-        <p>
-          All 7 operating BTS/MRT lines, with 173 station platforms including
-          interchange platforms and the Muang Thong Thani branch. This is a
-          schematic, not a walking or geographic map. Unopened extensions,
-          Airport Rail Link and SRT services are excluded.
-        </p>
-        <h3>Check with the operators</h3>
+        <h2>Fares & travel times</h2>
+        <p>Times and fares are estimates. Live arrivals and delays are not available.</p>
+        <h3>Times</h3>
+        <p>Includes train travel, walking between lines and estimated waits. Check station signs for the next and last trains.</p>
+        <h3>Fares</h3>
+        <p>Adult single-trip estimates, without discounts. Changing BTS lines at Siam uses one fare. Other lines are priced separately. Confirm the fare before buying a ticket.</p>
+        <h3>Map</h3>
+        <p>All seven BTS/MRT lines. Not to scale. Airport Rail Link, SRT and unopened lines are excluded.</p>
+        <h3>Sources</h3>
         <div className="source-links">
           <a
             href="https://www.bts.co.th/routemap.html"
@@ -546,8 +467,7 @@ export function RouteOptimizer() {
           </a>
         </div>
         <p className="data-date">
-          Sources reviewed 17 September 2026. Confirm current fares and service
-          with the operator before travel.
+          Updated 17 September 2026.
         </p>
       </dialog>
     </div>
